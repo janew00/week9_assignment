@@ -1,18 +1,27 @@
-import java.util.Scanner;
 import java.util.Random;
+import java.util.Scanner;
 
-public class bubble{
-    public static void BubbleSort(int[] list){
-    int temp;
+public class shell {
+    private static void ShellSort(int[] list){
+        int n= list.length;
+        for(int i= n/2; i>0; i=i/2) {
+            if ((i % 2) == 0)
+                i++;
 
-        for(int i=0; i<=list.length; i++) {
-            for (int j = 0; j <= list.length-2; j++) {
-                if (list[j] > list[j + 1]) {
-                    temp = list[j];
-                    list[j] = list[j + 1];
-                    list[j + 1] = temp;
+                for (int j = 0; j < i; j++) {
+                    shellinsert(list, j, n-1, i);
                 }
+        }
+    }
+
+    private static void shellinsert(int list[],int a ,int b, int c){
+        int temp,j;
+        for(int i=a+c;i<=b;i=i+c){
+            temp=list[i];
+            for(j=i-c;j>=a&&list[j]>temp;j=j-c){
+                list[j+c]=list[j];
             }
+            list[j+c]=temp;
         }
     }
 
@@ -35,10 +44,10 @@ public static int[] Randomnum(int n){
         System.out.println("배열값은 랜덤으로 생성: ");
         int[] A=Randomnum(N);
 
-        BubbleSort(A);
+        ShellSort(A);
 
         for(int i=0; i<A.length; i++){
-            System.out.println("버블 정렬 후:" +A[i]);
+            System.out.println("쉘 정렬 후:" +A[i]);
         }
         long afterTime=System.currentTimeMillis();
         long DiffTime=(afterTime-beforeTime)/1000;
